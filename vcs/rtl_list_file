@@ -1,0 +1,9 @@
++incdir../sim/sim_def_dir
++incdir../sim/class_dir
++incdir../rtl/glb_def
++incdir../sim/tb_dir
++incdir../rtl/common_module
+../sim/tb_dir/tb_top.sv
+../rtl/common_module/rgb_top.v
+../rtl/common_module/sync.v
+../rtl/common_module/clk_div.v

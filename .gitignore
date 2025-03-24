@@ -1,0 +1,7 @@
+fpga/*
+!fpga/xdc/io_constraint.xdc
+!/rtl
+!/sim
+vcs/*
+!/vcs/Makefile
+!/vcs/rtl_list_file
