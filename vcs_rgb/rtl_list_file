@@ -1,12 +1,9 @@
 +incdir../sim/sim_def_dir
 +incdir../sim/class_dir
 +incdir../rtl/glb_def
-+incdir../sim/tb_dir
-+incdir../rtl/
++incdir../sim/tb_rgb
 +incdir../rtl/rgb_ctrl
-+incdir../rtl/glb_def
-+incdir../rtl/ova_ctrl
-../sim/tb_dir/tb_top.sv
+../sim/tb_rgb/tb_rgb.sv
 ../rtl/rgb_ctrl/rgb_top.v
 ../rtl/rgb_ctrl/sync.v
 ../rtl/rgb_ctrl/clk_div.v

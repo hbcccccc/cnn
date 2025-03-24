@@ -5,3 +5,6 @@ fpga/*
 vcs/*
 !/vcs/Makefile
 !/vcs/rtl_list_file
+vcs_rgb/*
+!/vcs_rgb/Makefile
+!/vcs_rgb/rtl_list_file
