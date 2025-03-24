@@ -2,12 +2,18 @@ module rgb_top(
     input   wire                clk         ,
     input   wire                i_rst_n     ,
     output  wire    [23:0]      o_rgb       ,
-(* MARK_DEBUG="true" *)    output  wire                o_rgb_clk   ,
-(* MARK_DEBUG="true" *)    output  wire                lcd_de      ,
-(* MARK_DEBUG="true" *)    output  wire                lcd_rst_n   ,
-(* MARK_DEBUG="true" *)    output  wire                lcd_bl      ,
-(* MARK_DEBUG="true" *)    output  wire                lcd_hs      ,
-(* MARK_DEBUG="true" *)    output  wire                lcd_vs      
+
+
+    input   wire    [23:0]      i_rgb       ,
+    input   wire                i_data_vld  ,
+    output  wire                o_data_ready,
+
+    output  wire                o_rgb_clk   ,
+    output  wire                lcd_de      ,
+    output  wire                lcd_rst_n   ,
+    output  wire                lcd_bl      ,
+    output  wire                lcd_hs      ,
+    output  wire                lcd_vs      
 );
 
 wire    clk_div             ;
@@ -27,12 +33,12 @@ clk_div inst_clk_div(
 sync_gen inst_sync_gen(
 .i_clk         (clk_div     ),  
 .i_rst_n       (i_rst_n     ),
-.r             (8'hff      ),
+.r             (8'hff       ),
 .g             (8'hff       ),
 .b             (8'hff       ),
 .i_data_vld    (1'b1        ),
-.o_line_sync   (     ),
-.o_frame_sync   (      ),
+.o_line_sync   (            ),
+.o_frame_sync  (            ),
 //.o_data_vld    (lcd_de      ),
 .o_data_ready  (lcd_de       ),
 .o_r           (o_rgb[7:0]  ),

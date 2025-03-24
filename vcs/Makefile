@@ -1,5 +1,5 @@
 GLB_DEFINE_PATH = "../rtl/glb_def"
-RTL_PATH = "../rtl/common_module"
+RTL_PATH = "../rtl/"
 CLASS_LIB = "../sim/class_dir"
 SIM_DEFINE = "../sim/sim_def_dir"
 TB_PATH = "../sim/tb_dir"
