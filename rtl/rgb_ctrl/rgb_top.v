@@ -13,7 +13,15 @@ module rgb_top(
     output  wire                lcd_rst_n   ,
     output  wire                lcd_bl      ,
     output  wire                lcd_hs      ,
-    output  wire                lcd_vs      
+    output  wire                lcd_vs      ,
+
+
+    input   wire                i_fifo_empty        ,
+    input   wire                i_fifo_rec_work_en  ,
+    //output  wire                o_fifo_work_en      ,
+    output  wire                o_fifo_read_en      ,
+    input   wire    [15:0]      i_fifo_rd_data      ,
+    input   wire                i_fifo_rd_data_vld  
 );
 
 wire    clk_div             ;
@@ -30,13 +38,34 @@ clk_div inst_clk_div(
 .clk_div     (clk_div   )
 );
 
+
+//fifo ctrl 
+wire    r_fifo_rec_work_en_1d;
+wire    r_fifo_rec_work_en_2d;
+wire    w_fifo_read_en      =     ~r_fifo_rec_work_en_2d ? 
+                                  ~i_fifo_empty          ? 1'b1 : 1'b0 : 1'b0;
+
+
+wire    [7:0]   w_red_data      = {i_fifo_rd_data[15:11],3'd0};
+wire    [7:0]   w_green_data    = {i_fifo_rd_data[10:5],2'd0};
+wire    [7:0]   w_blue_data      = {i_fifo_rd_data[4:0],3'd0};
+
+
+
+dff_default_low #(1) inst_dff_low1(1'b1 , i_fifo_rec_work_en    , r_fifo_rec_work_en_1d , clk, i_rst_n);
+dff_default_low #(1) inst_dff_low2(1'b1 , r_fifo_rec_work_en_1d , r_fifo_rec_work_en_2d , clk, i_rst_n);
+dff_default_low #(1) inst_dff_low3(1'b1 , w_fifo_read_en , o_fifo_read_en , clk, i_rst_n);
+
+
+
+
 sync_gen inst_sync_gen(
-.i_clk         (clk_div     ),  
-.i_rst_n       (i_rst_n     ),
-.r             (8'hff       ),
-.g             (8'hff       ),
-.b             (8'hff       ),
-.i_data_vld    (1'b1        ),
+.i_clk         (clk_div                       ),  
+.i_rst_n       (i_rst_n                       ),
+.r             (w_red_data                    ),
+.g             (w_green_data                  ),
+.b             (w_red_data                    ),
+.i_data_vld    (i_fifo_rd_data_vld            ),
 .o_line_sync   (            ),
 .o_frame_sync  (            ),
 //.o_data_vld    (lcd_de      ),

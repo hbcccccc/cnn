@@ -19,12 +19,14 @@ module sync_gen (
 //for line cnt 
 localparam HSPW     =  128    ; // equals the number of clocks for hsync valid
 localparam HBP      =  88   ; // equals the number of clocks before data vld
-localparam HOZVAL   =  800  ; // equals the number of clocks of data vld 
+//localparam HOZVAL   =  800  ; // equals the number of clocks of data vld 
+localparam HOZVAL   =  640  ;//used for ov7725
 localparam HFP      =  40   ; 
 //for frame cnt
 localparam VSPW     =  2 ;
 localparam VBP      =  33  ;
-localparam LINE     =  480 ;
+//localparam LINE     =  480 ;
+localparam LINE     =  480 ; //used for ov7725
 localparam VFP      =  10  ;
 
 //`else 

@@ -1,11 +1,11 @@
 GLB_DEFINE_PATH = "../rtl/glb_def"
-RTL_PATH = "../rtl/rgb_ctrl"
+RTL_PATH = "../rtl"
 CLASS_LIB = "../sim/class_dir"
 SIM_DEFINE = "../sim/sim_def_dir"
-TB_PATH = "../sim/tb_rgb"
+TB_PATH = "../sim/tb_ova_rgb"
 
-TOP_NAME = tb_rgb 
-FSDB_NAME = tb_rgb.fsdb
+TOP_NAME = tb_ova_rgb 
+FSDB_NAME = tb_ova_rgb.fsdb
 
 #该选项用于调试systemverilog的仿真文件，比如说断点调试 1:开启 0：关闭
 DEBUG_MODE = 1
@@ -33,7 +33,7 @@ gen:
 		
 #编译选项
 comp:
-	vcs -full64 +v2k -sverilog -debug_access+all -top $(TOP_NAME) -f rtl_list_file
+	vcs -full64 +v2k -timescale=1ns/1ps -top $(TOP_NAME) -sverilog -debug_access+all -top $(TOP_NAME)-f rtl_list_file
 
 sim:
 	./simv

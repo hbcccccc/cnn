@@ -8,3 +8,13 @@ vcs/*
 vcs_rgb/*
 !/vcs_rgb/Makefile
 !/vcs_rgb/rtl_list_file
+vcs_ova/*
+!/vcs_ova/Makefile
+!/vcs_ova/rtl_list_file
+vcs_ova_rgb/*
+!/vcs_ova_rgb/Makefile
+!/vcs_ova_rgb/rtl_list_file
+vcs_fifo/*
+!/vcs_fifo/Makefile
+!/vcs_fifo/rtl_list_file
+
