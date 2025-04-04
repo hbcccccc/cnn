@@ -71,7 +71,7 @@ rgb_top inst_rgb_top(
 
 
 top_asfifo#(
-    .depth(307400),
+    .depth(262144),
     .width(16   )
 )
 inst_asfifo(

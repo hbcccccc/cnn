@@ -4,27 +4,29 @@ virtual intf_ov7725_data vif;
 function  new(input virtual intf_ov7725_data vif);
     this.vif = vif;
     vif.data = 16'd0;
+    vif.vsync <= 1'b0;
+    vif.href = 1'b0;
 endfunction
 
 task data_gen();
+
     #100ns;
-    @(posedge vif.pclk);
-    vif.vsync <= 1'b1;
-    #1000ns;
-    vif.vsync <= 1'b0;
-    #400ns;
-    repeat(4) begin
-        repeat(6) begin
-            @(posedge vif.pclk);
-            vif.href = 1'b1;
-            vif.data <= vif.data + 1'b1;
-        end
+    repeat(5) begin
         @(posedge vif.pclk);
-        vif.href <= 1'b0;
-        #100ns;
         vif.vsync <= 1'b1;
         #100ns;
         vif.vsync <= 1'b0;
+        #200ns;
+        repeat(480) begin
+            repeat(640*2) begin
+                @(posedge vif.pclk);
+                vif.href <= 1'b1;
+                vif.data <= vif.data + 1'b1;
+            end
+            //@(posedge vif.pclk);
+            vif.href <= 1'b0;
+            #500ns;
+        end
     end
 endtask
 

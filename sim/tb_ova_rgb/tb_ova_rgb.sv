@@ -56,7 +56,7 @@ end
 
 
 initial begin
-	#10000000ns;
+	#100000000ns;
 	$finish;
 end
 

@@ -22,8 +22,8 @@ parameter DEVICE_ADDR = 7'b101_0000
   output    wire               o_iic_rd_byte_vld   ,
   output    wire               o_iic_error         ,
 
-  (* mark_debug="true" *)output    wire               o_scl               ,
-  (* mark_debug="true" *)inout                        sda                                   
+  output    wire               o_scl               ,
+  inout                        sda                                   
 );  
 //truly ADDR_NUM ,WR_BYTE_NUM ,RD_BYTE_NUM equal parameters-1 
 
@@ -41,7 +41,7 @@ localparam      ST_ERROR      =5'd10;
 
 localparam      SCL_CNT_MAX   =SYS_CLK/SCL_CLK;
 
-(* mark_debug="true" *)reg [4:0] curr_st;
+reg [4:0] curr_st;
 wire [4:0] next_st;
 
 wire [15:0]  r_scl_cnt;
@@ -49,10 +49,10 @@ wire[15:0]  w_scl_cnt;
 wire        w_scl_bit;
 wire        r_scl_bit;
 wire[3:0]   w_scl_num_cnt;
-(* mark_debug="true" *)wire[3:0]   r_scl_num_cnt;
+wire[3:0]   r_scl_num_cnt;
 wire[5:0]   w_byte_num   ;
 wire[5:0]   r_byte_num   ;
-(* mark_debug="true" *)wire        w_i_sda        ;
+wire        w_i_sda        ;
 wire        w_o_sda        ;
 wire        r_o_sda        ;
 reg         w_sda_en       ;
@@ -72,8 +72,8 @@ wire    w_st_rd_data   = curr_st ==ST_RD_DATA   ;
 wire    w_st_rd_stop   = curr_st ==ST_RD_STOP   ;
 wire    w_st_error     = curr_st ==ST_ERROR     ;
 
-(* mark_debug="true" *)wire  w_time_1_4ui  = r_scl_cnt == SCL_CNT_MAX/4 -1'b1;
-(* mark_debug="true" *)wire  w_time_3_4ui  = r_scl_cnt == SCL_CNT_MAX/4 +SCL_CNT_MAX/2 - 1'b1;
+wire  w_time_1_4ui  = r_scl_cnt == SCL_CNT_MAX/4 -1'b1;
+wire  w_time_3_4ui  = r_scl_cnt == SCL_CNT_MAX/4 +SCL_CNT_MAX/2 - 1'b1;
 wire  w_time_1ui    = r_scl_cnt == SCL_CNT_MAX - 1'b1;
 //generate scl_clk
 
@@ -190,13 +190,13 @@ end
 
 assign  w_o_sda = (w_st_wr_start ) && (r_scl_cnt == SCL_CNT_MAX/2 -1'b1) ? 1'b0 :  //generate start signal
             //      (w_st_wr_addr  ) && (r_byte_num == ADDR_NUM) && (r_scl_num_cnt == 4'd8) && (r_scl_cnt ==SCL_CNT_MAX/2 + 4'd10)? 1'b1:
-                  (w_st_rd_start ) && (w_time_3_4ui) ? 1'b0:
-                  (w_st_rd_start ) && (w_time_1_4ui)? 1'b1 :
+                  (w_st_rd_start ) && (w_time_3_4ui) ? 1'b0 :
+                  (w_st_rd_start ) && (w_time_1_4ui) ? 1'b1 :
                   (w_st_wr_ctrl || w_st_wr_addr || w_st_wr_data || w_st_rd_ctrl) && w_data_update_vld  ? (w_send_byte[7]):
-                  (w_st_wr_stop || w_st_rd_stop) && (w_time_1_4ui)? 1'b0:
+                  (w_st_wr_stop || w_st_rd_stop) && (w_time_1_4ui)? 1'b0 :
                   (w_st_wr_stop || w_st_rd_stop) && (w_time_3_4ui)? 1'b1 :  //generate stop signal
                   (w_st_rd_data && r_byte_num < i_iic_rd_byte_num) && (r_scl_num_cnt == 4'd8            )? 1'b0 : 
-                  (w_st_rd_data && r_byte_num == i_iic_rd_byte_num)&& (r_scl_num_cnt == 4'd8)           ? 1'b1:
+                  (w_st_rd_data && r_byte_num == i_iic_rd_byte_num)&& (r_scl_num_cnt == 4'd8)            ? 1'b1 :
                   r_o_sda;//generate master ack signal;
 
 always@(*)begin

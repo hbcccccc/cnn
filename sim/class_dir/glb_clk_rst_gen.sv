@@ -7,7 +7,7 @@ virtual  glb_clk_rst intf;
     endfunction
 
     task stop_reset();
-        #1000;
+        #10;
         intf.rst_n = 1'b1;
     endtask
 

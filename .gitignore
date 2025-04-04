@@ -1,5 +1,3 @@
-fpga/*
-!fpga/xdc/io_constraint.xdc
 !/rtl
 !/sim
 vcs/*
@@ -17,4 +15,6 @@ vcs_ova_rgb/*
 vcs_fifo/*
 !/vcs_fifo/Makefile
 !/vcs_fifo/rtl_list_file
+fpga/*
+!fpga/src
 
