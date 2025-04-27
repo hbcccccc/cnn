@@ -6,8 +6,8 @@
 +incdir../rtl/fifo
 +incdir../rtl/i2c_ctrl
 +incdir../rtl/rgb_ctrl
++incdir../rtl/axi_interface
 +incdir../rtl/top
-+incdir../rtl/glb_def
 +incdir../rtl/ova_ctrl
 ../sim/class_dir/intf_sync.sv
 ../sim/class_dir/i2c_slave.sv
@@ -15,7 +15,6 @@
 ../sim/class_dir/ov7725_data_gen.sv
 ../sim/class_dir/intf_ov7725_data.sv
 ../sim/class_dir/intf_i2c.sv
-../sim/tb_ova_rgb/tb_ova_rgb.sv
 ../rtl/fifo/top_asfifo.v
 ../rtl/fifo/fifo_pointer.v
 ../rtl/fifo/fifo_memory.v
@@ -25,7 +24,16 @@
 ../rtl/rgb_ctrl/rgb_top.v
 ../rtl/rgb_ctrl/sync.v
 ../rtl/rgb_ctrl/clk_div.v
-../rtl/top/top.v
+../rtl/axi_interface/axi_slave.sv
+../rtl/axi_interface/intf_2_fifo.sv
+../rtl/axi_interface/intf_rd_data_channel.sv
+../rtl/axi_interface/intf_rd_addr_channel.sv
+../rtl/axi_interface/glb_signal.sv
+../rtl/axi_interface/intf_wr_rsp_channel.sv
+../rtl/axi_interface/intf_wr_addr_channel.sv
+../rtl/axi_interface/intf_wr_data_channel.sv
 ../rtl/ova_ctrl/ova_read.v
 ../rtl/ova_ctrl/ova_cfg.v
 ../rtl/ova_ctrl/ova_top.v
+../rtl/top/top.sv
+../sim/tb_ova_rgb/tb_ova_rgb.sv

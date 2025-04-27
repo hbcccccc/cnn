@@ -6,10 +6,11 @@ module ova_top(
     input   wire   [7:0]    i_data      ,
     input   wire            href        ,
     input   wire            vsync       ,
-    input   wire            i_fifo_empty,
+    //input   wire            i_fifo_empty,
     output  wire   [15:0]    o_data      ,
     output  wire            o_data_vld  ,
     output  wire            o_fifo_work_en,
+    output  wire            o_fifo_choose ,
 
     output              ova_cfg_scl ,
     inout               ova_cfg_sda 
@@ -73,9 +74,10 @@ ova_read inst_ova_read(
 .rst_n                   (rst_n              ),
 .href                    (href               ),
 .vsync                   (vsync              ),
-.i_fifo_empty            (i_fifo_empty       ),
+//.i_fifo_empty            (i_fifo_empty       ),
 .o_data                  (o_data             ),
 .o_data_vld              (o_data_vld         ),
+.o_fifo_choose           (o_fifo_choose      ),
 .o_fifo_work_en          (o_fifo_work_en     )
 );
 

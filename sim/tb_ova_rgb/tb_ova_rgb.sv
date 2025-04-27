@@ -16,13 +16,19 @@ glb_clk_rst     intf_clk_rst();
 glb_clk_rst_gen obj_clk_rst;
 intf_ov7725_data intf_ov7725();
 ov7725_data_gen obj_ov7725;
-
-
+axi_glb_signal          glb_signal      ();
+axi_rd_addr_channel 	rd_addr_channel ();
+axi_wr_addr_channel 	wr_addr_channel ();
+axi_rd_data_channel 	rd_data_channel ();
+axi_wr_data_channel 	wr_data_channel ();
+axi_wr_rsp_channel 		wr_rsp_channel  ();
+assign glb_signal.clk = intf_clk_rst.clk;
+assign glb_signal.rst_n = intf_clk_rst.rst_n;
 
 cnn_top inst_cnn(
     //connected with rgb_lcd
-.clk         (intf_clk_rst.clk	),
-.rst_n       (intf_clk_rst.rst_n),
+//.clk         (intf_clk_rst.clk	),
+//.rst_n       (intf_clk_rst.rst_n),
 .o_rgb       (),
 .o_rgb_clk   (),
 .lcd_de      (),
@@ -35,9 +41,13 @@ cnn_top inst_cnn(
 .i_pclk      (intf_ov7725.pclk),
 .i_data      (intf_ov7725.data),
 .href        (intf_ov7725.href),
-.vsync       (intf_ov7725.vsync)
-
-
+.vsync       (intf_ov7725.vsync),
+.glb_signal      (glb_signal     ),
+.rd_addr_channel (rd_addr_channel),
+.wr_addr_channel (wr_addr_channel),
+.rd_data_channel (rd_data_channel),
+.wr_data_channel (wr_data_channel),
+.wr_rsp_channel  (wr_rsp_channel )
 
 
 );
