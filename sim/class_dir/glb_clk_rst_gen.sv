@@ -1,6 +1,6 @@
 class glb_clk_rst_gen;
-virtual  glb_clk_rst intf;
-    function new(input virtual glb_clk_rst vif);
+virtual  axi_glb_signal intf;
+    function new(input virtual axi_glb_signal vif);
         this.intf = vif;
         intf.clk =   1'b0;
         intf.rst_n = 1'b0;

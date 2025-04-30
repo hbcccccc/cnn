@@ -2,11 +2,11 @@ interface axi_wr_rsp_channel() ;
     parameter DATA_WIDTH = 32;
     parameter ADDR_WIDTH = 32;
 
-logic               bid     ;
-logic               bresp   ;
-logic               buser   ;
-logic               bvalid  ;
-logic               bready  ;  
+logic      [3:0]         bid     ;
+logic      [1:0]         bresp   ;
+logic                    buser   ;
+logic                    bvalid  ;
+logic                    bready  ;  
 
 
 modport master (

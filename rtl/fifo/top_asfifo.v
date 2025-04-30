@@ -11,11 +11,11 @@ module top_asfifo
     input               wr_en       ,
     input [width-1:0]   wr_data     ,
     input               rd_en       ,
-    input [width-1:0]   rd_data     ,
+    output [width-1:0]  rd_data     ,
     input               rest_n      ,
     output              full        ,
-    output              data_out_vld,
-    output              empty
+    output     wire         data_out_vld,
+    output     wire         empty
 );
 
 wire full_pointer;

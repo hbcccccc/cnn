@@ -11,7 +11,7 @@ module fifo_pointer
     output [$clog2(depth)-1:0] rd_addr,
 
     output full,
-    output empty
+    output reg empty
 );
 
 reg [$clog2(depth):0] wr_addr_bin;
@@ -106,13 +106,13 @@ end
 
 //格雷码解码:将二级寄存的写指针从格雷码转为二进制编码
 always @(*) begin
-    wr_to_rd[$clog2(depth)] <= wr_addr_gray_reg2[$clog2(depth)];
+    wr_to_rd[$clog2(depth)] = wr_addr_gray_reg2[$clog2(depth)];
     for (j = $clog2(depth)-1;j >=0;j=j-1)
         wr_to_rd[j] = wr_to_rd[j+1] ^ wr_addr_gray_reg2[j] ;
 end
 //读地址
 always @(*) begin
-    rd_to_wr[$clog2(depth)] <= rd_addr_gray_reg2[$clog2(depth)];
+    rd_to_wr[$clog2(depth)] = rd_addr_gray_reg2[$clog2(depth)];
     for(i = $clog2(depth)-1;i>=0;i=i-1)
         rd_to_wr[i] = rd_to_wr[i+1] ^ rd_addr_gray_reg2[i];
 end
@@ -125,7 +125,12 @@ assign full = ((rd_to_wr[$clog2(depth)] !=  wr_addr_bin[$clog2(depth)]) && rd_to
 
 //空的判断：转换后的写地址与读地址相等，并且两者具有相同的标志信号
 
-assign empty = (wr_to_rd == rd_addr_bin);
+//assign empty = (wr_to_rd == rd_addr_bin) ? 1'b1 : 1'b0;
+
+always@(*)begin
+    empty = (wr_to_rd == rd_addr_bin) ? 1'b1 : 1'b0;
+    //$display("@time: %t wr_to_rd = %b, rd_addr_bin = %b, empty = %b",$time, wr_to_rd, rd_addr_bin, empty);
+end
 
 assign wr_addr = wr_addr_bin[$clog2(depth)-1:0];
 assign rd_addr = rd_addr_bin[$clog2(depth)-1:0];

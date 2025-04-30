@@ -6,6 +6,8 @@ module cnn_top(
     axi_rd_data_channel.slave   rd_data_channel ,
     axi_wr_data_channel.slave   wr_data_channel ,
     axi_wr_rsp_channel.slave    wr_rsp_channel  ,
+    output  wire                o_interrupt     ,
+
     output  wire    [23:0]      o_rgb       ,
     output  wire                o_rgb_clk   ,
     output  wire                lcd_de      ,
@@ -29,8 +31,8 @@ wire                w_ova_fifo_ctrl_en                                      ;
 wire    [15:00]     w_ova_rece_data                                         ;
 wire                w_ova_rec_data_vld                                      ;
 wire                w_rgb_fifo_rd_en                                        ;
-wire                w_fifo0_wr_en  = w_ova_rec_data_vld  &&(w_fifo_choose)  ;
-wire                w_fifo1_wr_en  = w_ova_rec_data_vld  &&(~w_fifo_choose) ;
+wire                w_fifo1_wr_en  = w_ova_rec_data_vld  &&(~w_fifo_choose)  ;
+wire                w_fifo2_wr_en  = w_ova_rec_data_vld  &&(w_fifo_choose) ;
 
 wire    [15:0]      w_rgb_rd_data                                           ;
 wire                w_rgb_rd_data_vld                                       ;
@@ -48,24 +50,27 @@ axi_slave axi_slave_ctrl(
     .rd_data_channel (rd_data_channel ),
     .wr_data_channel (wr_data_channel ),
     .wr_rsp_channel  (wr_rsp_channel  ),
-    .intf_fifo       (intf_fifo       )    
+    .intf_fifo       (intf_fifo       ),
+    .o_interrupt     (o_interrupt     ),
+    .i_href          (href            ),    
+    .i_vsync         (vsync           )
 );
 
 ova_top inst_ova(
-.clk            (clk           ),
-.rst_n          (rst_n         ),
-.ova_cfg_scl    (ova_cfg_scl   ),
-.ova_cfg_sda    (ova_cfg_sda   ),
-
-.i_pclk         (i_pclk),
-.i_data         (i_data),
-.href           (href),
-.vsync          (vsync),
-//.i_fifo_empty   (w_fifo_empty),
-.o_data         (w_ova_rece_data),
-.o_data_vld     (w_ova_rec_data_vld),
+.clk            (clk                ),
+.rst_n          (rst_n              ),
+.ova_cfg_scl    (ova_cfg_scl        ),
+.ova_cfg_sda    (ova_cfg_sda        ),
+    
+.i_pclk         (i_pclk             ),
+.i_data         (i_data             ),
+.href           (href               ),
+.vsync          (vsync              ),
+//.i_fifo_empty   (w_fifo_empty)    ,
+.o_data         (w_ova_rece_data    ),
+.o_data_vld     (w_ova_rec_data_vld ),
 .o_fifo_choose  (w_fifo_choose      ),
-.o_fifo_work_en (w_ova_fifo_ctrl_en)
+.o_fifo_work_en (w_ova_fifo_ctrl_en )
 
 );
 
@@ -92,8 +97,8 @@ rgb_top inst_rgb_top(
 
 );
 
-wire   w_fifo2_rd_en = intf_fifo.fifo_wr_en && intf_fifo.fifo_choose;
-wire   w_fifo1_rd_en = intf_fifo.fifo_wr_en && (~intf_fifo.fifo_choose);
+wire   w_fifo2_rd_en = intf_fifo.fifo_rd_en && intf_fifo.fifo_choose;
+wire   w_fifo1_rd_en = intf_fifo.fifo_rd_en && (~intf_fifo.fifo_choose);
 
 top_asfifo#(
     .depth(1024 ),
@@ -102,7 +107,7 @@ top_asfifo#(
 inst_asfifo1(
 .wr_clk      (i_pclk                    ),
 .rd_clk      (clk                       ),
-.wr_en       (w_fifo0_wr_en             ),
+.wr_en       (w_fifo1_wr_en             ),
 .wr_data     (w_ova_rece_data           ),
 .rd_en       (w_fifo1_rd_en             ),
 .rd_data     (intf_fifo.fifo1_rd_data   ),     
@@ -120,7 +125,7 @@ top_asfifo#(
 inst_asfifo2(
 .wr_clk      (i_pclk                        ),
 .rd_clk      (clk                           ),
-.wr_en       (w_fifo1_wr_en                 ),
+.wr_en       (w_fifo2_wr_en                 ),
 .wr_data     (w_ova_rece_data               ),
 .rd_en       (w_fifo2_rd_en                 ),
 .rd_data     (intf_fifo.fifo2_rd_data       ),
