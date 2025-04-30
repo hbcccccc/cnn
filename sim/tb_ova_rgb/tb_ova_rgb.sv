@@ -12,6 +12,7 @@
 module tb_ova_rgb;
 
 
+bit i =0;
 //glb_clk_rst     intf_clk_rst();
 glb_clk_rst_gen obj_clk_rst;
 intf_ov7725_data intf_ov7725();
@@ -91,8 +92,9 @@ end
 always@(posedge w_interrupt)begin
 	fork
 		obj_axi_clear_int.interrupt_clear();
-		obj_axi_read_fifo.run();
-	join_none
+		obj_axi_read_fifo.run(i);
+	join
+	i = i+1;
 end
 
 
