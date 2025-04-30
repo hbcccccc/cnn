@@ -68,7 +68,7 @@ vif_rd_data_channel.rready   <= 1'b1;
 endtask
 
 task axi_pingpang_read();
-    bit [3:0] arrid = 0;
+    bit [15:0] arrid = 0;
     repeat(40) begin
         axi_read_transfer_normal(
             .araddr  (32'h000f_0000 + 16'h04),

@@ -1,14 +1,14 @@
 interface axi_rd_data_channel();
 
 parameter DATA_WIDTH    = 32;
-parameter ID_MAX_WIDTH  = 4;
+parameter ID_MAX_WIDTH  = 16;
 
 
     logic      [ID_MAX_WIDTH-1  :0]                 rid      ;
     logic      [DATA_WIDTH-1    :0]                 rdata    ;
     logic      [1               :0]                 rresp    ;
     logic                                           rlast    ;
-    logic                                           ruser    ;
+//    logic                                           ruser    ;
     logic                                           rvalid   ;
     logic                                           rready   ;
 
@@ -18,8 +18,8 @@ modport master (
     input  rid      ,
     input  rdata    ,
     input  rresp    ,
-    input  rlast    ,
-    input  ruser
+    input  rlast    
+//    input  ruser
 );
 
 modport slave(
@@ -28,8 +28,8 @@ modport slave(
     output rid      ,
     output rdata    ,
     output rresp    ,
-    output rlast    ,
-    output ruser
+    output rlast    
+//    output ruser
 );
 
 endinterface

@@ -1,6 +1,6 @@
 interface axi_wr_addr_channel();
 
-    parameter ID_MAX_WIDTH  = 4;
+    parameter ID_MAX_WIDTH  = 16;
     parameter ADDR_WIDTH    = 32;
 
 
@@ -13,7 +13,6 @@ logic      [1                        :0]                    awlock    ;
 logic      [3                        :0]                    awcache   ;
 logic      [2                        :0]                    awprot    ;
 logic      [3                        :0]                    awqos     ;
-//logic                           awuser    ;
 logic                           awvalid   ;
 logic                           awready   ;
 

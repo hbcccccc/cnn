@@ -1,5 +1,5 @@
 interface axi_wr_data_channel();
-parameter ID_MAX_WIDTH  = 4;
+parameter ID_MAX_WIDTH  = 16;
 parameter DATA_WIDTH    = 32;
 
 

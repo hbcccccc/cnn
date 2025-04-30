@@ -2,6 +2,7 @@ module  axi_slave
 #(
     parameter DATA_WIDTH    = 32,
     parameter ADDR_WIDTH    = 32,
+    parameter ID_MAX_WIDTH  = 16,
     parameter OFFSET_ADDR   = 32'h000f_0000
 
 )
@@ -49,7 +50,7 @@ localparam RESPONSE_DECERR  = 2'b00;
     reg  [3              :0] r_rd_qos       ;
     reg  [3              :0] r_rd_region    ;
     reg                      r_rd_valid_1d  ;
-    reg  [3              :0] r_arid         ;
+    reg  [ID_MAX_WIDTH-1 :0] r_arid         ;
 
 
 
@@ -87,7 +88,7 @@ localparam RESPONSE_DECERR  = 2'b00;
                                                   (w_rd_int_status       )      ? 1'b1                                                      : 1'b0  ;
 
 //write addr channel signals declare
-    reg     [3              :0]     r_awid      ;
+    reg     [ID_MAX_WIDTH-1 :0]     r_awid      ;
     reg     [ADDR_WIDTH - 1 :0]     r_awaddr    ;
     reg     [3              :0]     r_awlen     ;
     reg     [2              :0]     r_awsize    ;
@@ -97,7 +98,7 @@ localparam RESPONSE_DECERR  = 2'b00;
     reg     [2              :0]     r_awprot    ;
     reg     [3              :0]     r_awqos     ;
 
-    reg     [3              :0]     r_wid       ;
+    reg     [ID_MAX_WIDTH-1 :0]     r_wid       ;
                              
 
     wire                            w_wr_addr_channlel_signal_lod_en = wr_addr_channel.awvalid & wr_addr_channel.awready ;
@@ -116,7 +117,7 @@ localparam RESPONSE_DECERR  = 2'b00;
 //write response channel signals declare
     wire                            wr_rsp_channel_vld_gen           = (r_wr_data_done_2d)                                ;
     wire                            wr_rsp_channel_vld_clr           = (wr_rsp_channel.bvalid && wr_rsp_channel.bready);
-    reg    [3               :0]     r_bid      ;
+    reg    [ID_MAX_WIDTH-1 :0]     r_bid      ;
     reg    [1               :0]     r_bresp    ;
 
 always @(posedge clk or negedge rst_n) begin
@@ -132,14 +133,14 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n)
-        r_wid   <=  4'd0;
+        r_wid   <=  {ID_MAX_WIDTH{1'd0}};
     else if(w_wr_data_channel_signal_lod_en)
         r_wid   <= wr_data_channel.wid;
 end
 
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n)
-        r_bid   <=  4'd0;
+        r_bid   <=  {ID_MAX_WIDTH{1'd0}};
     else if(r_awid == r_wid)
         r_bid   <= r_wid;
 end
@@ -156,12 +157,12 @@ end
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n) begin
         wr_rsp_channel.bvalid <= 1'b0;
-        wr_rsp_channel.bid    <= 4'd0 ;
+        wr_rsp_channel.bid    <= {ID_MAX_WIDTH{1'd0}};;
         wr_rsp_channel.bresp  <= RESPONSE_OKEY;
     end
     else if(wr_rsp_channel_vld_clr) begin
         wr_rsp_channel.bvalid<= 1'b0;
-        wr_rsp_channel.bid    <= 4'd0 ;
+        wr_rsp_channel.bid    <= {ID_MAX_WIDTH{1'd0}};;
         wr_rsp_channel.bresp  <= RESPONSE_OKEY;
     end
      else if(wr_rsp_channel_vld_gen)begin
@@ -198,7 +199,7 @@ always @(posedge clk or negedge rst_n) begin
         r_rd_prot   <= {2{1'b0}};
         r_rd_qos    <= {3{1'b0}};
         r_rd_region <= {3{1'b0}};
-        r_arid      <= {4{1'b0}};
+        r_arid      <= {ID_MAX_WIDTH{1'b0}};
     end
     else if(rd_addr_channel_signal_en) begin
         r_rd_addr   <= rd_addr_channel.araddr;
@@ -222,7 +223,7 @@ always @(posedge clk or negedge rst_n) begin
         r_rd_prot   <= {2{1'b0}};
         r_rd_qos    <= {3{1'b0}};
         r_rd_region <= {3{1'b0}};
-        r_arid      <= {4{1'b0}};
+        r_arid      <= {ID_MAX_WIDTH{1'b0}};
     end
 end
 //generate fifo read cnt clear signal

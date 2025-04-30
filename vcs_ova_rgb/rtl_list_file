@@ -36,6 +36,10 @@
 ../rtl/ova_ctrl/ova_cfg.v
 ../rtl/ova_ctrl/ova_top.v
 ../rtl/top/top.sv
+../rtl/top/top_verilog_wrapper.sv
+
+
 ../sim/class_dir/axi_read.sv
 ../sim/class_dir/axi_write.sv
 ../sim/tb_ova_rgb/tb_ova_rgb.sv
+
