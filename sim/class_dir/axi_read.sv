@@ -1,4 +1,7 @@
 class axi_read;
+localparam INT_STATUS       = 16'h00;
+localparam FIFO1_READ       = 16'h04;
+localparam FIFO2_READ       = 16'h08;
 virtual     axi_glb_signal          vif_glb_signal      ;
 virtual     axi_rd_addr_channel 	vif_rd_addr_channel ;
 virtual     axi_wr_addr_channel 	vif_wr_addr_channel ;
@@ -67,16 +70,29 @@ vif_rd_data_channel.rready   <= 1'b1;
 
 endtask
 
-task axi_pingpang_read();
+task axi_pingpang_read(
+    input bit i //fifo choose
+);
     bit [3:0] arrid = 0;
+   
     repeat(40) begin
-        axi_read_transfer_normal(
-            .araddr  (32'h000f_0000 + 16'h04),
-            .arrid   (arrid                 ),
-            .arlen   (4'hf                  ),
-            .arsize  (4'hf                  ),
-            .arbrust (2'b00                 )
-        );
+        if(i  == 0)
+            axi_read_transfer_normal(
+                .araddr  (32'h000f_0000 + FIFO1_READ),
+                .arrid   (arrid                 ),
+                .arlen   (4'hf                  ),
+                .arsize  (4'hf                  ),
+                .arbrust (2'b00                 )
+            );
+        else 
+               axi_read_transfer_normal(
+                .araddr  (32'h000f_0000 + FIFO2_READ),
+                .arrid   (arrid                 ),
+                .arlen   (4'hf                  ),
+                .arsize  (4'hf                  ),
+                .arbrust (2'b00                 )
+               );
+        //$display("i is %d",i);
         arrid = arrid + 1;
         wait(vif_rd_data_channel.rlast == 1'b1);
         @(posedge vif_glb_signal.clk);
@@ -96,8 +112,12 @@ endtask
 
 
 
-task run();
-        axi_pingpang_read();
+task run(
+    input bit i
+);
+        axi_pingpang_read(
+            .i(i)
+        );
 endtask
 
 endclass
