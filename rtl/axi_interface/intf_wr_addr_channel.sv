@@ -1,6 +1,6 @@
 interface axi_wr_addr_channel();
 
-    parameter ID_MAX_WIDTH  = 4;
+    parameter ID_MAX_WIDTH  = 16;
     parameter ADDR_WIDTH    = 32;
 
 

@@ -1,7 +1,7 @@
 interface axi_rd_addr_channel();
     parameter DATA_WIDTH    = 32;
     parameter ADDR_WIDTH    = 32;
-    parameter ID_MAX_WIDTH  = 4;
+    parameter ID_MAX_WIDTH  = 16;
     
     logic     [ID_MAX_WIDTH-1           :0]                 arid      ;
     logic     [ADDR_WIDTH - 1           :0]                 araddr    ;

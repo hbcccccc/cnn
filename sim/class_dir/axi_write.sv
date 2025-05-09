@@ -67,7 +67,7 @@ endtask
 
 
 task axi_wr_transfer(
-    input [3    :0]     awid    ,
+    input [15    :0]     awid    ,
     input [31   :0]     awaddr  , 
     input [3    :0]     awlen   ,
     input [2    :0]     awsize  ,
@@ -147,7 +147,7 @@ endtask
 task interrupt_clear();
     wdata.push_back(32'hffff_ffff);
     axi_wr_transfer(
-        .awid   (3'b101),
+        .awid   (16'hff11),
         .awaddr ( 32'h000f_0000 + 16'h00),
         .awlen  (4'b0),
         .awsize (3'b010),

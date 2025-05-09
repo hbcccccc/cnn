@@ -50,7 +50,7 @@ endtask
 
 task axi_read_transfer_normal(
     input  logic [31:0]     araddr,
-    input  logic [3:0]      arrid,
+    input  logic [15:0]      arrid,
     input  logic [3:0]      arlen,
     input  logic [2:0]      arsize,
     input  logic [1:0]      arbrust
@@ -73,7 +73,7 @@ endtask
 task axi_pingpang_read(
     input bit i //fifo choose
 );
-    bit [3:0] arrid = 0;
+    bit [15:0] arrid = 0;
    
     repeat(40) begin
         if(i  == 0)
