@@ -2,8 +2,8 @@ module  axi_slave
 #(
     parameter DATA_WIDTH    = 32,
     parameter ADDR_WIDTH    = 32,
-    parameter ID_MAX_WIDTH  = 16,
-    parameter OFFSET_ADDR   = 32'h000f_0000
+    parameter OFFSET_ADDR   = 32'h4000_0000,
+    parameter ID_MAX_WIDTH  = 12
 
 )
 (
@@ -14,9 +14,9 @@ module  axi_slave
     axi_wr_data_channel.slave   wr_data_channel ,
     axi_wr_rsp_channel.slave    wr_rsp_channel  ,
     intf_to_fifo.slave          intf_fifo       ,
-    output  logic               o_interrupt     ,
-    input   logic               i_href          ,
-    input   logic               i_vsync           
+    output  reg                o_interrupt     ,
+    input   wire               i_href          ,
+    input   wire               i_vsync           
 
 
 );
@@ -133,14 +133,14 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n)
-        r_wid   <=  {ID_MAX_WIDTH{1'd0}};
+        r_wid   <= {ID_MAX_WIDTH{1'b0}};
     else if(w_wr_data_channel_signal_lod_en)
         r_wid   <= wr_data_channel.wid;
 end
 
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n)
-        r_bid   <=  {ID_MAX_WIDTH{1'd0}};
+        r_bid   <=  {ID_MAX_WIDTH{1'b0}}; 
     else if(r_awid == r_wid)
         r_bid   <= r_wid;
 end
@@ -157,12 +157,12 @@ end
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n) begin
         wr_rsp_channel.bvalid <= 1'b0;
-        wr_rsp_channel.bid    <= {ID_MAX_WIDTH{1'd0}};;
+        wr_rsp_channel.bid    <={ID_MAX_WIDTH{1'b0}} ;
         wr_rsp_channel.bresp  <= RESPONSE_OKEY;
     end
     else if(wr_rsp_channel_vld_clr) begin
         wr_rsp_channel.bvalid<= 1'b0;
-        wr_rsp_channel.bid    <= {ID_MAX_WIDTH{1'd0}};;
+        wr_rsp_channel.bid    <= {ID_MAX_WIDTH{1'b0}} ;
         wr_rsp_channel.bresp  <= RESPONSE_OKEY;
     end
      else if(wr_rsp_channel_vld_gen)begin
@@ -290,7 +290,7 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n) begin
-        r_awid      <= 4'd0                       ;
+        r_awid      <= {ID_MAX_WIDTH{1'b0}}                       ;
         r_awaddr    <= {ADDR_WIDTH{1'b0}}         ;
         r_awlen     <= 4'd0                       ;
         r_awsize    <= 3'd0                       ;

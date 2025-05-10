@@ -1,7 +1,7 @@
 interface axi_rd_data_channel();
 
 parameter DATA_WIDTH    = 32;
-parameter ID_MAX_WIDTH  = 16;
+parameter ID_MAX_WIDTH  = 12;
 
 
     logic      [ID_MAX_WIDTH-1  :0]                 rid      ;

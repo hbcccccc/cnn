@@ -1,4 +1,8 @@
-module cnn_top(
+module cnn_top
+#(
+ parameter OFFSET_ADDR = 32'h4000_0000
+)
+(
     //connected with rgb_lcd
     axi_glb_signal              glb_signal      ,
     axi_rd_addr_channel.slave   rd_addr_channel ,
@@ -25,7 +29,8 @@ module cnn_top(
     input   wire                vsync       
 );
 
-wire                w_fifo_empty                                            ;
+wire                w_fifo_empty1                                            ;
+wire                w_fifo_empty2                                            ;
 wire                w_fifo_choose                                           ;
 wire                w_ova_fifo_ctrl_en                                      ;
 wire    [15:00]     w_ova_rece_data                                         ;
@@ -43,7 +48,12 @@ wire                rst_n          = glb_signal.rst_n                       ;
 
 intf_to_fifo intf_fifo();
 
-axi_slave axi_slave_ctrl(
+axi_slave 
+#(
+.OFFSET_ADDR(OFFSET_ADDR)
+)
+axi_slave_ctrl
+(
     .glb_signal      (glb_signal      ),
     .rd_addr_channel (rd_addr_channel ),
     .wr_addr_channel (wr_addr_channel ),
@@ -89,7 +99,7 @@ rgb_top inst_rgb_top(
 .lcd_bl             (lcd_bl         ),
 .lcd_hs             (lcd_hs         ),
 .lcd_vs             (lcd_vs         ),
-.i_fifo_empty       (w_fifo_empty   ),
+//.i_fifo_empty       (w_fifo_empty   ),
 .i_fifo_rec_work_en (w_ova_fifo_ctrl_en),
 .o_fifo_read_en     (                   ),
 .i_fifo_rd_data     (                   ),
@@ -114,7 +124,7 @@ inst_asfifo1(
 .rest_n      (rst_n                     ),
 .full        (                          ),
 .data_out_vld(w_rgb_rd_data_vld         ),
-.empty       (w_fifo_empty              )
+.empty       (w_fifo_empty1              )
 
 );
 
@@ -132,7 +142,7 @@ inst_asfifo2(
 .rest_n      (rst_n                         ),
 .full        (                              ),
 .data_out_vld(w_rgb_rd_data_vld             ),
-.empty       (w_fifo_empty                  )
+.empty       (w_fifo_empty2                  )
 
 );
 

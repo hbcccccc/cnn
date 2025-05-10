@@ -11,7 +11,7 @@ module fifo_pointer
     output [$clog2(depth)-1:0] rd_addr,
 
     output full,
-    output reg empty
+    output  empty
 );
 
 reg [$clog2(depth):0] wr_addr_bin;
@@ -125,12 +125,12 @@ assign full = ((rd_to_wr[$clog2(depth)] !=  wr_addr_bin[$clog2(depth)]) && rd_to
 
 //空的判断：转换后的写地址与读地址相等，并且两者具有相同的标志信号
 
-//assign empty = (wr_to_rd == rd_addr_bin) ? 1'b1 : 1'b0;
+assign empty = (wr_to_rd == rd_addr_bin) ? 1'b1 : 1'b0;
 
-always@(*)begin
-    empty = (wr_to_rd == rd_addr_bin) ? 1'b1 : 1'b0;
-    //$display("@time: %t wr_to_rd = %b, rd_addr_bin = %b, empty = %b",$time, wr_to_rd, rd_addr_bin, empty);
-end
+//always@(*)begin
+//    empty = (wr_to_rd == rd_addr_bin) ? 1'b1 : 1'b0;
+//    //$display("@time: %t wr_to_rd = %b, rd_addr_bin = %b, empty = %b",$time, wr_to_rd, rd_addr_bin, empty);
+//end
 
 assign wr_addr = wr_addr_bin[$clog2(depth)-1:0];
 assign rd_addr = rd_addr_bin[$clog2(depth)-1:0];
