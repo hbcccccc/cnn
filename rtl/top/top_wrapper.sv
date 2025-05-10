@@ -1,5 +1,6 @@
 module cnn_top_wrapper
 #(
+    parameter OFFSET_ADDR = 32'h4000_0000 ,
     parameter DATA_WIDTH    = 32,
     parameter ADDR_WIDTH    = 32,
     parameter ID_MAX_WIDTH  = 12
@@ -142,7 +143,11 @@ assign  bvalid                       = inst_wr_rsp_channel.bvalid  ;
 assign  inst_wr_rsp_channel.bready  = bready                     ;
 
 
-cnn_top inst_cnn_top(
+cnn_top 
+#(
+.OFFSET_ADDR(OFFSET_ADDR)
+)
+inst_cnn_top(
 .glb_signal      (inst_glb_signal),
 .rd_addr_channel (inst_rd_addr_channel),
 .wr_addr_channel (inst_wr_addr_channel),

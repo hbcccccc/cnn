@@ -78,7 +78,7 @@ task axi_pingpang_read(
     repeat(40) begin
         if(i  == 0)
             axi_read_transfer_normal(
-                .araddr  (32'h000f_0000 + FIFO1_READ),
+                .araddr  (32'h4000_0000 + FIFO1_READ),
                 .arrid   (arrid                 ),
                 .arlen   (4'hf                  ),
                 .arsize  (4'hf                  ),
@@ -86,7 +86,7 @@ task axi_pingpang_read(
             );
         else 
                axi_read_transfer_normal(
-                .araddr  (32'h000f_0000 + FIFO2_READ),
+                .araddr  (32'h4000_0000+ FIFO2_READ),
                 .arrid   (arrid                 ),
                 .arlen   (4'hf                  ),
                 .arsize  (4'hf                  ),

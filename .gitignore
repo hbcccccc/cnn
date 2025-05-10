@@ -17,5 +17,7 @@ vcs_fifo/*
 !/vcs_fifo/rtl_list_file
 fpga/*
 !fpga/src
+!/fpga/xsa_bit_file
+
 
 

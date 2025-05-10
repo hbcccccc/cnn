@@ -2,7 +2,7 @@ module  axi_slave
 #(
     parameter DATA_WIDTH    = 32,
     parameter ADDR_WIDTH    = 32,
-    parameter OFFSET_ADDR   = 32'h000f_0000,
+    parameter OFFSET_ADDR   = 32'h4000_0000,
     parameter ID_MAX_WIDTH  = 12
 
 )
@@ -14,9 +14,9 @@ module  axi_slave
     axi_wr_data_channel.slave   wr_data_channel ,
     axi_wr_rsp_channel.slave    wr_rsp_channel  ,
     intf_to_fifo.slave          intf_fifo       ,
-    output  logic               o_interrupt     ,
-    input   logic               i_href          ,
-    input   logic               i_vsync           
+    output  reg                o_interrupt     ,
+    input   wire               i_href          ,
+    input   wire               i_vsync           
 
 
 );

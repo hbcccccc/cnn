@@ -96,6 +96,6 @@ create_clock -period 40.000 -name ov_cllk -waveform {0.000 20.000} -add [get_por
 create_clock -period 20.000 -name sysclk -waveform {0.000 10.000} -add [get_ports clk]
 
 
-set_property PACKAGE_PIN U5 [get_ports vsyn]
-set_property IOSTANDARD LVCMOS33 [get_ports vsyn]
+set_property PACKAGE_PIN U5 [get_ports vsync]
+set_property IOSTANDARD LVCMOS33 [get_ports vsync]
 

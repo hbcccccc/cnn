@@ -148,7 +148,7 @@ task interrupt_clear();
     wdata.push_back(32'hffff_ffff);
     axi_wr_transfer(
         .awid   (16'hff11),
-        .awaddr ( 32'h000f_0000 + 16'h00),
+        .awaddr ( 32'h4000_0000 + 16'h00),
         .awlen  (4'b0),
         .awsize (3'b010),
         .awbrust(0),
