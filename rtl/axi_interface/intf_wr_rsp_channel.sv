@@ -1,7 +1,7 @@
 interface axi_wr_rsp_channel() ;
     parameter DATA_WIDTH = 32;
     parameter ADDR_WIDTH = 32;
-    parameter ID_MAX_WIDTH  = 16;
+    parameter ID_MAX_WIDTH  = 12;
 
 logic      [ID_MAX_WIDTH-1:0]         bid     ;
 logic      [1:0]         bresp   ;

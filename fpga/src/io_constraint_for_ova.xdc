@@ -12,3 +12,4 @@ set_property PULLUP true [get_ports ova_cfg_scl]
 
 
 
+

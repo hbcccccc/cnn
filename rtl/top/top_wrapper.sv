@@ -2,7 +2,7 @@ module cnn_top_wrapper
 #(
     parameter DATA_WIDTH    = 32,
     parameter ADDR_WIDTH    = 32,
-    parameter ID_MAX_WIDTH  = 4
+    parameter ID_MAX_WIDTH  = 12
 )
 (
 
@@ -75,7 +75,7 @@ module cnn_top_wrapper
     output                                                  wready  ,
 
     //wr_resp_channel
-    output [3:0]                                            bid     ,
+    output [ID_MAX_WIDTH-1:0]                                            bid     ,
     output [1:0]                                            bresp   ,
     output                                                  buser   ,
     output                                                  bvalid  ,

@@ -3,7 +3,7 @@ module  axi_slave
     parameter DATA_WIDTH    = 32,
     parameter ADDR_WIDTH    = 32,
     parameter OFFSET_ADDR   = 32'h000f_0000,
-    parameter ID_MAX_WIDTH  = 16
+    parameter ID_MAX_WIDTH  = 12
 
 )
 (
