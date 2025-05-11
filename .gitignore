@@ -18,6 +18,7 @@ vcs_fifo/*
 fpga/*
 !fpga/src
 !/fpga/xsa_bit_file
+!/fpga/vitis_debug
 
 
 

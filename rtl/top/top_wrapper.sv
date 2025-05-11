@@ -26,6 +26,8 @@ module cnn_top_wrapper
     //axi glb signal
     input  wire                clk     ,
     input wire                rst_n   ,
+    output wire               clk_debug,
+    output wire               rst_debug,
 
     //rd_addr_channel
     input   [ID_MAX_WIDTH-1           :0]                 arid      ,
@@ -106,7 +108,7 @@ assign  rid                           = inst_rd_data_channel.rid      ;
 assign  rdata                         = inst_rd_data_channel.rdata    ; 
 assign  rresp                         = inst_rd_data_channel.rresp    ; 
 assign  rlast                         = inst_rd_data_channel.rlast    ; 
-assign  ruser                         = inst_rd_data_channel.ruser    ; 
+//assign  ruser                         = inst_rd_data_channel.ruser    ; 
 assign  rvalid                        = inst_rd_data_channel.rvalid   ; 
 assign  inst_rd_data_channel.rready   = rready                        ;
 
@@ -170,4 +172,19 @@ inst_cnn_top(
 .vsync           (vsync               ) 
 );
 
+wire  clk_2div;
+
+clk_div inst_clk_div(
+    .clk(clk),
+    .i_rst_n(rst_n),
+    .clk_div(clk_2div)
+);
+
+clk_div inst_clk_div2(
+    .clk(clk_2div),
+    .i_rst_n(rst_n),
+    .clk_div(clk_debug)
+);
+
+assign rst_debug = rst_n;
 endmodule

@@ -548,7 +548,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>0c8b0209</spirit:value>
+            <spirit:value>db7a71ca</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -564,7 +564,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>0c8b0209</spirit:value>
+            <spirit:value>db7a71ca</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -794,6 +794,32 @@
         <spirit:name>rst_n</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_anylanguagesynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>clk_debug</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_anylanguagesynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_anylanguagebehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>rst_debug</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
@@ -1644,7 +1670,7 @@
       <spirit:file>
         <spirit:name>top/top_wrapper.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_82d02bc9</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_8c9a90a4</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1801,8 +1827,8 @@
       </xilinx:taxonomies>
       <xilinx:displayName>cnn_top_wrapper_v1_0</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
-      <xilinx:coreRevision>6</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2025-05-10T05:43:10Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>8</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2025-05-10T08:56:33Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@61da6e3d_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
@@ -1852,14 +1878,55 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@53c0e992_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@181ee0fa_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@fba61ec_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c842051_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1468316a_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c14151f_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@64262a0d_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@171cb636_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3ab6e5f6_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a955ff3_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@72c1cb30_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@181948ce_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3670acb1_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3493e251_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5dbb9bcf_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@391cf86b_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e5270b0_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5afd7355_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@17233301_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@28c3446_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5675bb39_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@789718f0_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@554ebb46_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9a18ab3_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@631c7ac9_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@32d638e3_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@10b3f750_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a7a74e5_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@153273ed_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4f083208_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1795cd5d_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2d7b0059_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@485697c7_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@36d819aa_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6e3bc64e_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2e96306f_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3edc2f1_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d61978d_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37992c9b_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@71e58bc9_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@66945d48_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@743f1a68_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f2ac6e6_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62a8fd19_ARCHIVE_LOCATION">/home/edson/project/cnn/rtl</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2020.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="658af7cf"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="232180cf"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="fb354fe6"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="c49d2abe"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="799466d9"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="daca0530"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="1a9fa37e"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="1e2f8bec"/>
     </xilinx:packagingInfo>
