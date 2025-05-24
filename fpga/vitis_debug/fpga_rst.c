@@ -5,14 +5,22 @@
 #include "xuartps.h"
 #include "xscugic.h"
 #include "sleep.h"
+#define CNN_AXI_BASE_ADDR 0x40000000
+#define OVA_INT_IRQ_ID XPAR_FABRIC_CNN_TOP_WRAPPER_0_O_INTERRUPT_INTR
 
+typedef struct {
+	XUartPs *uart_ptr;
+	XScuGic *scugic_ptr;
+} Uart_scugic_stru;
 
 void pl_soft_rst(void)
 {
+
+	//XScuGic_Disable(ptr_scugic, OVA_INT_IRQ_ID);
 	int reg_value;
 	Xil_Out32(SLCR_UNLOCK_ADDR, UNLOCK_KEY);
 	Xil_Out32(PL_RST_CTRL_ADDR,PL_RST_MASK);
-	usleep(100);
+	usleep(1);
 	Xil_Out32(PL_RST_CTRL_ADDR, PL_CLR_MASK);
 	Xil_Out32(SLCR_LOCK_ADDR, LOCK_KEY);
 	reg_value = Xil_In32(PL_RST_CTRL_ADDR);
@@ -25,6 +33,7 @@ void pl_soft_rst(void)
 		xil_printf(" exit rst \r\n");
 	}
 
+	//XScuGic_Enable(ptr_scugic, OVA_INT_IRQ_ID);
 }
 
 void uart_init(XUartPs * inst_uart_ps_ptr)
@@ -43,12 +52,18 @@ void uart_init(XUartPs * inst_uart_ps_ptr)
 
 void uart_interrupt_handler(void *call_back_ref)
 {
-	XUartPs *inst_uart_ps_ptr = (XUartPs *)call_back_ref;
+	//XUartPs *inst_uart_ps_ptr = (XUartPs *)call_back_ref;
+	Uart_scugic_stru *inst_uart_scugic_struct_ptr = (Uart_scugic_stru *)call_back_ref;
+	XUartPs *inst_uart_ps_ptr = inst_uart_scugic_struct_ptr->uart_ptr;
+	XScuGic *inst_xscugic_ptr = inst_uart_scugic_struct_ptr->scugic_ptr;
+
+	XScuGic_Disable(inst_xscugic_ptr, OVA_INT_IRQ_ID);
+	XScuGic_Disable(inst_xscugic_ptr, UART_INT_IRQ_ID);
 	u32 rec_data = 0;
 	u32 uart_int_status;
-	//ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½Ð¶ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
+	//¸Ãº¯ÊýÓÃÓÚ¶ÁÈ¡ÖÐ¶Ï×´Ì¬ÑÚÂë
 	uart_int_status = XUartPs_ReadReg(inst_uart_ps_ptr->Config.BaseAddress,XUARTPS_IMR_OFFSET);
-	//ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½Ð¶ï¿½×´Ì¬
+	//¸Ãº¯ÊýÓÃÓÚ¶ÁÈ¡ÖÐ¶Ï×´Ì¬
 	uart_int_status &= XUartPs_ReadReg(inst_uart_ps_ptr->Config.BaseAddress,XUARTPS_ISR_OFFSET);
 	if(uart_int_status & (u32)XUARTPS_IXR_RXOVR)
 		{
@@ -57,8 +72,14 @@ void uart_interrupt_handler(void *call_back_ref)
 	if( rec_data == PL_RST_FLG)
 		{
 			xil_printf("uart int , rst pl \r\n");
+			XUartPs_WriteReg(inst_uart_ps_ptr->Config.BaseAddress,XUARTPS_ISR_OFFSET,XUARTPS_IXR_RXOVR);
 			pl_soft_rst();
+			 volatile uint32_t *addr = (uint32_t *)CNN_AXI_BASE_ADDR;
+			 *addr = 0xFFFFFFFF;
+			XScuGic_Enable(inst_xscugic_ptr, OVA_INT_IRQ_ID);
+			XScuGic_Enable(inst_xscugic_ptr, UART_INT_IRQ_ID);
 		}
+
 }
 
 
@@ -66,7 +87,11 @@ int uart_interrupt_init(XUartPs * inst_uart_ps_ptr , XScuGic *ptr_scugic)
 {
 	int status;
 	//XScuGic_Connect
-	status = XScuGic_Connect(ptr_scugic, UART_INT_IRQ_ID,(Xil_ExceptionHandler)uart_interrupt_handler,(void *) inst_uart_ps_ptr);
+	Uart_scugic_stru *inst_uart_scugic_struct_ptr;
+	inst_uart_scugic_struct_ptr->scugic_ptr = ptr_scugic;
+	inst_uart_scugic_struct_ptr->uart_ptr = inst_uart_ps_ptr;
+
+	status = XScuGic_Connect(ptr_scugic, UART_INT_IRQ_ID,(Xil_ExceptionHandler)uart_interrupt_handler,(void *) inst_uart_scugic_struct_ptr);
 	XScuGic_SetPriorityTriggerType(ptr_scugic, UART_INT_IRQ_ID, (u8)0xA1, (u8)0x1);
 	XUartPs_SetInterruptMask(inst_uart_ps_ptr, XUARTPS_IXR_RXOVR);
 	XScuGic_Enable(ptr_scugic, UART_INT_IRQ_ID);
