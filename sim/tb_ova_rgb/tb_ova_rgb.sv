@@ -79,13 +79,17 @@ initial begin
 		obj_axi_read_fifo.axi_rd_channel_intf_init();
 		obj_axi_clear_int.axi_wr_chn_init();
 		obj_ov7725.run();
+		obj_clk_rst.random_rst();
 	join_none
 	//@(posedge w_interrupt);
 	//fork 
 //
 	//join_none
 
+end
 
+
+initial begin
 
 end
 

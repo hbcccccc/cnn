@@ -17,6 +17,15 @@ virtual  axi_glb_signal intf;
         end
     endtask
 
+    task random_rst();
+    $display("Random reset");
+        #10000ns;
+       // intf.clk =   1'b0;
+        intf.rst_n = 1'b0;
+        #100;
+    $display("Random reset end");
+        stop_reset();
+    endtask
 
     task run();
         fork
